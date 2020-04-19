@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#117697"
+    android:id="@+id/scrollView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/covidTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tested for Covid19?"/>
+
+                <RadioGroup
+                    android:id="@+id/covidRG"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:text="Positve"
+                        android:id="@+id/positive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCovidRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:text="Negative"
+                        android:id="@+id/negative"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCovidRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:text="Not Tested"
+                        android:id="@+id/not_tested"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCovidRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:text="Waiting for Result"
+                        android:id="@+id/waiting_for_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCovidRadioButtonClicked"/>
+
+                </RadioGroup>
+
+<!--                <Button-->
+<!--                    android:visibility="gone"-->
+<!--                    android:id="@+id/reportUploadBtn"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:onClick="onClickChooseImageBtn"-->
+<!--                    android:text="Upload Photo"/>-->
+
+<!--                <TextView-->
+<!--                    android:visibility="visible"-->
+<!--                    android:id="@+id/reportUploadTv"-->
+<!--                    android:textColor="@color/colorRed"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Please Upload your Test Report"/>-->
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/haveAccessTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Do you have access to any of these machines?"/>
+
+                <CheckBox
+                    android:text="Thermometer"
+                    android:id="@+id/thermometerCb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onMachineCheckboxClicked"/>
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/thermometerEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please share your Temperature in Celsius?"/>
+
+                <CheckBox
+                    android:text="Diabetes"
+                    android:id="@+id/diabetesCb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onMachineCheckboxClicked"/>
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/diabetesEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please share your Sugar Level?"/>
+
+                <CheckBox
+                    android:text="Blood Pressure"
+                    android:id="@+id/bloodPressureCb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onMachineCheckboxClicked"/>
+
+                <EditText
+                    android:visibility="gone"
+                    android:id="@+id/bloodPressureEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please share your Blood Pressure?"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/feverTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Fever?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/feverSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/headacheTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Headache?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/headacheSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/fatigueTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Fatigue?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/fatigueSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/runnyNoseTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Runny Nose?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/runnyNoseSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/diarrheaTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Diarrhea?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/diarrheaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/shortBreathingTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has short of breathing?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/shortBreathingSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/contactCoronaTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Had contact with anyone affected with Covid19?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/contactCoronaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/smokingTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has smoking habit?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/smokingSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/heartProblemTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has heart Diseases?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/heartProblemSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/asthmaTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Asthma?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/asthmaSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/goneOutside"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Have been outside?"/>
+
+                <Spinner
+                    android:padding="@dimen/spinnerPadding"
+                    android:id="@+id/goneOutsideSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="#ffffff"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp">
+
+                <TextView
+                    android:textSize="@dimen/headingSize"
+                    android:id="@+id/coughTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Has Cough?"/>
+
+                <RadioGroup
+                    android:id="@+id/coughRG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:text="No"
+                        android:id="@+id/coughNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCoughRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:text="Yes"
+                        android:id="@+id/coughYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="onCoughRadioButtonClicked"/>
+
+                </RadioGroup>
+
+                <io.github.sahalnazar.cough_data_app.WaveView
+                    android:visibility="gone"
+                    android:id="@+id/wave_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    app:baselineColor="@color/transparent"
+                    app:waveColor="@color/green"
+                    app:waveStokeWidth="1dp" />
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/recordLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <Button
+                        android:id="@+id/register_record_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Press and hold to record" />
+
+
+                    <Button
+                        android:layout_marginLeft="24dp"
+                        android:gravity="center_vertical"
+                        android:id="@+id/playBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="play"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+            android:onClick="onSubmitBtnClicked"
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+
+    </LinearLayout>
+
+</ScrollView>

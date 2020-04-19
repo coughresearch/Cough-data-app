@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Cough-data-app</string>
+
+    <string-array name="none_high_medium_low">
+        <item>None</item>
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
+    <string-array name="none_yes_no">
+        <item>None</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+</resources>
