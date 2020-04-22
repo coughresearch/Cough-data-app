@@ -42,5 +42,9 @@ dependencies {
     //wav recorder
     implementation'com.github.ideastudios:IdealRecorder:2.0.4'
 
+    //permission
+    implementation 'com.nabinbhandari.android:permissions:3.8'
+
+
 
 }

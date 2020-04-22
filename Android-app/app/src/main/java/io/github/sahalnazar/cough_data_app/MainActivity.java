@@ -3,6 +3,7 @@ package io.github.sahalnazar.cough_data_app;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
@@ -37,9 +38,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import tech.oom.idealrecorder.IdealRecorder;
 import tech.oom.idealrecorder.StatusListener;
@@ -104,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
     private String sOutside;
     private String sCough;
 
-
     private DatabaseReference mDatabaseReference;
     private StorageReference mCoughStorageReference;
 
@@ -116,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
     private File wavFile;
 
     private ProgressDialog mProgressDialog;
-
-    private boolean recordFlag = false;
-
-    private final int RC_PERMISSIONS_RECORD_AUDIO = 1;
 
     private IdealRecorder idealRecorder;
     private IdealRecorder.RecordConfig recordConfig;
@@ -140,18 +139,16 @@ public class MainActivity extends AppCompatActivity {
 
         editTextListeners();
 
-
         recordBtn.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent motionEvent) {
 
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
-                    RequestAudioPermissions();
+                    record();
                     scrollView.requestDisallowInterceptTouchEvent(true);
 
-                }
-                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
                     stopRecord();
 
@@ -165,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("cough Research Data");
         mCoughStorageReference = FirebaseStorage.getInstance().getReference().child("cough");
 
-
         mPlayBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,6 +174,24 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("Audio", "prepare() failed");
                 }
             }
+        });
+    }
+
+    private void RequestAudioAndStoragePermissions() {
+        String[] permissions = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        Permissions.check(this, permissions, "Please provide Microphone and Storage permission to record cough.", null, new PermissionHandler() {
+            @Override
+            public void onGranted() {
+                mRecordLayout.setVisibility(View.VISIBLE);
+                waveView.setVisibility(View.VISIBLE);
+            }
+            @Override
+            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                Toast.makeText(MainActivity.this, "Microphone and Storage permission are required to record cough.", Toast.LENGTH_SHORT).show();
+                mRecordLayout.setVisibility(View.GONE);
+                waveView.setVisibility(View.GONE);
+            }
+
         });
     }
 
@@ -296,39 +310,6 @@ public class MainActivity extends AppCompatActivity {
         waveView = (WaveView) findViewById(R.id.wave_view);
         scrollView = findViewById(R.id.scrollView);
 
-
-    }
-
-    private void RequestAudioPermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            //When permission is not granted by user, show them message why this permission is needed.
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.RECORD_AUDIO)) {
-                Toast.makeText(this, "Please grant permissions to record audio", Toast.LENGTH_LONG).show();
-
-                //Give user option to still opt-in the permissions
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.RECORD_AUDIO},
-                        RC_PERMISSIONS_RECORD_AUDIO);
-
-            } else {
-                // Show user dialog to grant permission to record audio
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.RECORD_AUDIO},
-                        RC_PERMISSIONS_RECORD_AUDIO);
-            }
-        }
-        //If permission is granted, then go ahead recording audio
-        else if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECORD_AUDIO)
-                == PackageManager.PERMISSION_GRANTED) {
-
-            //Go ahead with recording audio now
-            record();
-        }
     }
 
     private void record() {
@@ -336,8 +317,6 @@ public class MainActivity extends AppCompatActivity {
         idealRecorder.setRecordConfig(recordConfig).setMaxRecordTime(20000).setVolumeInterval(200);
         idealRecorder.setStatusListener(statusListener);
         idealRecorder.start();
-        recordFlag = true;
-
     }
 
     private String getSaveFilePath() {
@@ -349,25 +328,6 @@ public class MainActivity extends AppCompatActivity {
         return wavFile.getAbsolutePath();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case RC_PERMISSIONS_RECORD_AUDIO: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // permission was granted, yay!
-                    record();
-                } else {
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                    Toast.makeText(this, "Permissions Denied to record audio", Toast.LENGTH_LONG).show();
-                }
-                return;
-            }
-        }
-    }
-
     public void onCovidRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
@@ -375,32 +335,24 @@ public class MainActivity extends AppCompatActivity {
             case R.id.positive:
                 if (checked)
                     sCovid = mPositive.getText().toString();
-//                mUploadTv.setVisibility(View.VISIBLE);
-//                mUploadBtn.setVisibility(View.VISIBLE);
                 mCovidTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
 
                 break;
             case R.id.negative:
                 if (checked)
                     sCovid = mNegative.getText().toString();
-//                mUploadTv.setVisibility(View.VISIBLE);
-//                mUploadBtn.setVisibility(View.VISIBLE);
                 mCovidTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
                 break;
 
             case R.id.not_tested:
                 if (checked)
                     sCovid = mNotTested.getText().toString();
-//                mUploadTv.setVisibility(View.GONE);
-//                mUploadBtn.setVisibility(View.GONE);
                 mCovidTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
                 break;
 
             case R.id.waiting_for_result:
                 if (checked)
                     sCovid = mWaiting.getText().toString();
-//                mUploadTv.setVisibility(View.GONE);
-//                mUploadBtn.setVisibility(View.GONE);
                 mCovidTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
                 break;
 
@@ -411,7 +363,6 @@ public class MainActivity extends AppCompatActivity {
     public void onMachineCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
-
         // Check which checkbox was clicked
         switch (view.getId()) {
             case R.id.thermometerCb:
@@ -443,7 +394,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCoughRadioButtonClicked(View view) {
-
         boolean checked = ((RadioButton) view).isChecked();
         // Check which radio button was clicked
         switch (view.getId()) {
@@ -452,13 +402,14 @@ public class MainActivity extends AppCompatActivity {
                     sCough = mCoughNo.getText().toString();
                 mRecordLayout.setVisibility(View.GONE);
                 waveView.setVisibility(View.GONE);
+                wavFile = null;
                 mCoughTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
+
                 break;
             case R.id.coughYes:
                 if (checked)
                     sCough = mCoughYes.getText().toString();
-                mRecordLayout.setVisibility(View.VISIBLE);
-                waveView.setVisibility(View.VISIBLE);
+                RequestAudioAndStoragePermissions();
                 mCoughTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorTV));
                 break;
 
@@ -475,36 +426,39 @@ public class MainActivity extends AppCompatActivity {
         } else if (mCoughRg.getCheckedRadioButtonId() == -1) {
             Toast.makeText(this, "Select an option.", Toast.LENGTH_SHORT).show();
             mCoughTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorRed));
-        }
-        else if (mThermometerCb.isChecked() && sThermometerReading.matches("")) {
+        } else if (mThermometerCb.isChecked() && sThermometerReading.matches("")) {
             Toast.makeText(this, "Please provide your temperature.", Toast.LENGTH_SHORT).show();
             mThermometerCb.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorRed));
-        }
-        else if (mDiabetesCb.isChecked() && sDiabetes.matches("")) {
+        } else if (mDiabetesCb.isChecked() && sDiabetes.matches("")) {
             Toast.makeText(this, "Please provide your diabetes.", Toast.LENGTH_SHORT).show();
             mDiabetesCb.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorRed));
-        }
-        else if (mBpCb.isChecked() && sBpReading.matches("")) {
+        } else if (mBpCb.isChecked() && sBpReading.matches("")) {
             Toast.makeText(this, "Please provide your blood pressure.", Toast.LENGTH_SHORT).show();
             mBpCb.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorRed));
 
-        }
-        else if (!recordFlag && mCoughYes.isChecked()) {
+        } else if (wavFile == null && mCoughYes.isChecked()) {
             Toast.makeText(this, "Please record Cough audio.", Toast.LENGTH_SHORT).show();
             mCoughTv.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorRed));
 
-        }
-        else if (recordFlag && mCoughYes.isChecked()){
+        } else if (wavFile != null && mCoughYes.isChecked()) {
             uploadAudio();
 
-        }
-        else {
+        } else {
+
+            mProgressDialog.setMessage("Uploading...");
+            mProgressDialog.show();
 
             CoughData coughData = new CoughData(sCovid, sThermometerReading,
                     sDiabetes, sBpReading, sFever, sHeadache, sFatigue, sRunnyNose, sDiarrhea,
                     sShortBreathing, sContactCovid, sSmoking, sHeartDisease, sAsthma, sOutside,
                     sCough, "NA");
-            mDatabaseReference.push().setValue(coughData);
+            mDatabaseReference.push().setValue(coughData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    mProgressDialog.dismiss();
+                    Toast.makeText(MainActivity.this, "Upload successful, Thank you!", Toast.LENGTH_LONG).show();
+                }
+            });
 
         }
     }
@@ -522,8 +476,6 @@ public class MainActivity extends AppCompatActivity {
         filepath.putFile(audioFileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-
                 Task<Uri> firebasePhotoUri = taskSnapshot.getStorage().getDownloadUrl();
                 firebasePhotoUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
