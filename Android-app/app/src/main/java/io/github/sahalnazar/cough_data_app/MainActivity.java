@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
@@ -27,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -123,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
     private IdealRecorder idealRecorder;
     private IdealRecorder.RecordConfig recordConfig;
 
+    SharedPreferences prefs = null;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         IdealRecorder.getInstance().init(this);
         idealRecorder = IdealRecorder.getInstance();
+
+        prefs = getSharedPreferences(getPackageName(), MODE_PRIVATE);
 
         //initialize
         initialize();
@@ -175,6 +182,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Cough Research")
+                    .setMessage(getString(R.string.privacy_dialog))
+                    .setPositiveButton("Lets Contribute!", null)
+                    .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                            prefs.edit().putBoolean("firstrun", true).apply();
+                        }
+                    })
+                    .show();
+
+            prefs.edit().putBoolean("firstrun", false).apply();
+        }
     }
 
     private void RequestAudioAndStoragePermissions() {

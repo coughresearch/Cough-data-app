@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Cough-data-app</string>
+    <string name="privacy_dialog">We respect your privacy and contribution. We do not collect any         sensitive personal data (e.g., Name, Phone no, Email ) We are trying to build an app which         can potentially detect COVID-19 using cough sound, fever and other vital information. We         need your support and contribution in the project, Please help us in the fight against         COVID-19 by filling the form with correct details.\nYour contribution can save lives.</string>
 
     <string-array name="none_high_medium_low">
         <item>None</item>
