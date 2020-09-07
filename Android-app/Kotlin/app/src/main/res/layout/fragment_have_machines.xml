@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HaveMachinesFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/covidTV"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:background="@drawable/my_gradient_drawable"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/_16dp"
+            android:paddingTop="@dimen/_16dp"
+            android:paddingEnd="@dimen/_16dp"
+            android:text="@string/do_you_have_access_to_any_of_these_machines"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/covidTV">
+
+            <CheckBox
+                android:id="@+id/thermometerCb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/thermometer"
+                android:textColor="@color/radio_flat_text_selector"
+                android:textSize="@dimen/answer_text_size" />
+
+            <EditText
+                android:id="@+id/thermometerEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:ems="10"
+                android:hint="@string/please_share_your_temperature_in_celsius"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/diabetesCb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/diabetes"
+                android:textColor="@color/radio_flat_text_selector"
+                android:textSize="@dimen/answer_text_size" />
+
+            <EditText
+                android:id="@+id/diabetesEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:ems="10"
+                android:hint="@string/please_share_your_sugar_level"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/bloodPressureCb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@null"
+                android:checked="false"
+                android:gravity="center"
+                android:text="@string/blood_pressure"
+                android:textColor="@color/radio_flat_text_selector"
+                android:textColorHint="#FFFFFF"
+                android:textSize="@dimen/answer_text_size" />
+
+            <EditText
+                android:id="@+id/bloodPressureEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/please_share_your_blood_pressure"
+                android:inputType="textPersonName"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/firstFloatBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/radio_flat_selected"
+            android:clickable="true"
+            android:src="@drawable/navigate_next"
+            app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@android:color/white" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

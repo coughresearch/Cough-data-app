@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Cough Research</string>
+    <string name="privacy_dialog">We respect your privacy and contribution. We do not collect any         sensitive personal data (e.g., Name, Phone no, Email ) We are trying to build an app which         can potentially detect COVID-19 using cough sound, fever and other vital information. We         need your support and contribution in the project, Please help us in the fight against         COVID-19 by filling the form with correct details.\nYour contribution can save lives.</string>
+    <string name="tested_for_covid19">Tested for Covid19?</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
+    <string name="not_tested">Not Tested</string>
+    <string name="waiting_for_result">Waiting for Result</string>
+    <string name="do_you_have_access_to_any_of_these_machines">Please select devices you have access to</string>
+    <string name="thermometer">Thermometer</string>
+    <string name="please_share_your_temperature_in_celsius">Please share your Temperature in Celsius?</string>
+    <string name="diabetes">Diabetes checking device</string>
+    <string name="please_share_your_sugar_level">Please share your Sugar Level?</string>
+    <string name="blood_pressure">Blood pressure checking device</string>
+    <string name="please_share_your_blood_pressure">Please share your Blood Pressure?</string>
+    <string name="has_fever">Has Fever?</string>
+    <string name="has_headache">Has Headache?</string>
+    <string name="has_fatigue">Has Fatigue?</string>
+    <string name="has_runny_nose">Has Runny Nose?</string>
+    <string name="has_diarrhea">Has Diarrhea?</string>
+    <string name="has_short_of_breathing">Has short of breathing?</string>
+    <string name="had_contact_with_anyone_affected_with_covid19">Had contact with anyone affected with Covid19?</string>
+    <string name="has_smoking_habit">Has smoking habit?</string>
+    <string name="has_heart_diseases">Has heart Diseases?</string>
+    <string name="has_asthma">Has Asthma?</string>
+    <string name="have_been_outside">Have been outside?</string>
+    <string name="has_cough">Has Cough?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="press_and_hold_to_record">Press and hold to record</string>
+    <string name="play">play</string>
+    <string name="submit">Submit</string>
+    <string name="next">Next</string>
+
+    <string-array name="none_high_medium_low">
+        <item>None</item>
+        <item>High</item>
+        <item>Medium</item>
+        <item>Low</item>
+    </string-array>
+
+    <string-array name="none_yes_no">
+        <item>None</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/haveMachinesFragment">
+    <fragment
+        android:id="@+id/haveMachinesFragment"
+        android:name="io.github.sahalnazar.cough_data_app.HaveMachinesFragment"
+        android:label="fragment_have_machines"
+        tools:layout="@layout/fragment_have_machines" >
+        <action
+            android:id="@+id/action_haveMachinesFragment_to_covidTestFragment"
+            app:destination="@id/covidTestFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/covidTestFragment"
+        android:name="io.github.sahalnazar.cough_data_app.CovidTestFragment"
+        android:label="fragment_covid_test"
+        tools:layout="@layout/fragment_covid_test" >
+        <argument
+            android:name="hasThermometer"
+            app:argType="boolean" />
+        <argument
+            android:name="hasDiabetesDevice"
+            app:argType="boolean" />
+        <argument
+            android:name="hasBloodPressureDevice"
+            app:argType="boolean" />
+        <argument
+            android:name="temperatureReading"
+            app:argType="string" />
+        <argument
+            android:name="diabetesReading"
+            app:argType="string" />
+        <argument
+            android:name="bloodPressureReading"
+            app:argType="string" />
+    </fragment>
+</navigation>

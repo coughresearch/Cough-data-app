@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="headingSize">18sp</dimen>
+    <dimen name="spinnerPadding">10dp</dimen>
+    <dimen name="_80dp">80dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_3dp">3dp</dimen>
+    <dimen name="answer_text_size">16sp</dimen>
+</resources>
