@@ -1,2 +1,2 @@
 # Cough-data-app
-This repo contains cough data collection app.
+Cough and patient data collection app.
